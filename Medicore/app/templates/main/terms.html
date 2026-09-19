@@ -1,0 +1,30 @@
+{% extends 'base_public.html' %}
+{% block title %}Terms{% endblock %}
+{% block content %}
+<section class="legal-hero" aria-labelledby="legal-title">
+  <p class="saas-eyebrow">MEDICORE LEGAL CENTER <span aria-hidden="true">•</span> TRUST IN CARE</p>
+  <h1 id="legal-title">Terms of use &amp; privacy notice</h1>
+  <p>Clear standards for protecting patient information and using the MediCore workspace responsibly.</p>
+  <div class="legal-meta"><span><i aria-hidden="true">✓</i> Effective 19 September 2026</span><span><i aria-hidden="true">◈</i> For authorized care teams</span></div>
+</section>
+<section class="legal-layout" aria-label="Terms and privacy notice">
+  <aside class="legal-nav" aria-label="On this page">
+    <p>ON THIS PAGE</p>
+    <a href="#use">Using MediCore</a>
+    <a href="#privacy">Privacy &amp; data</a>
+    <a href="#security">Security responsibilities</a>
+    <a href="#records">Records &amp; billing</a>
+    <a href="#availability">Service availability</a>
+    <a href="#contact">Questions &amp; contact</a>
+  </aside>
+  <article class="legal-document">
+    <div class="legal-intro"><span class="legal-intro-icon" aria-hidden="true">✚</span><div><h2>Our commitment</h2><p>MediCore is designed to support coordinated care. These terms explain the responsibilities that help keep the workspace dependable, respectful, and appropriate for handling health information.</p></div></div>
+    <section id="use"><span class="legal-number">01</span><h2>Using MediCore</h2><p>MediCore may be used only by staff authorized by their healthcare organization. Use the workspace for legitimate clinical, administrative, scheduling, prescription, and billing activities within your assigned role.</p><p>Keep your account credentials private. Do not allow another person to use your account, bypass access controls, or use the service for unlawful, harmful, or unrelated purposes.</p></section>
+    <section id="privacy"><span class="legal-number">02</span><h2>Privacy &amp; patient information</h2><p>Access only the patient information needed to perform your duties. Treat all records as confidential and follow the privacy, consent, retention, and disclosure requirements that apply to your organization.</p><div class="legal-callout"><strong>Handle with care</strong><span>Avoid exporting, printing, photographing, or storing patient information outside approved systems unless your organization has authorized the activity.</span></div></section>
+    <section id="security"><span class="legal-number">03</span><h2>Security responsibilities</h2><p>Use a strong, unique password and sign out when you finish, especially on shared devices. Keep devices updated and report suspected unauthorized access, lost devices, or security concerns to your administrator without delay.</p><p>MediCore applies account and access protections, but every team member shares responsibility for maintaining a secure care environment.</p></section>
+    <section id="records"><span class="legal-number">04</span><h2>Clinical records &amp; billing</h2><p>Enter information accurately and review it before finalizing an appointment, prescription, clinical note, invoice, payment, or balance. MediCore helps organize records; your organization remains responsible for clinical judgement, financial decisions, and regulatory compliance.</p></section>
+    <section id="availability"><span class="legal-number">05</span><h2>Service availability</h2><p>We may maintain, update, or temporarily restrict access to protect security and reliability. Keep your organization’s local downtime and emergency procedures available for situations where access to the workspace is interrupted.</p></section>
+    <section id="contact"><span class="legal-number">06</span><h2>Questions &amp; contact</h2><p>For questions about these terms, privacy practices, or your organization’s use of MediCore, contact your administrator or reach the MediCore care team through <a href="{{ url_for('main.contact') }}">our contact page</a>.</p></section>
+  </article>
+</section>
+{% endblock %}

@@ -1,0 +1,51 @@
+Attached Element Context from Integrated Browser
+
+Element: div
+
+URL: http://127.0.0.1:5000/
+
+HTML Path: main > section.landing-hero > div
+
+Outer HTML:
+```html
+<div>
+    <p class="eyebrow">MediCore</p>
+    <h1>Care, coordinated.</h1>
+    <p class="hero-copy">Manage patients, doctors, appointments and billing in one calm, connected workspace.</p>
+    <a class="button button-primary" href="/login">Staff login</a>
+  </div>
+```
+
+Dimensions:
+- top: 125px
+- left: 0px
+- width: 1131px
+- height: 219px
+
+CSS:
+```css
+* { box-sizing: border-box; }
+
+/* Inherited */
+body { color: var(--text); font: 16px/1.5 Inter, system-ui, sans-serif }
+
+/* Resolved values */
+box-sizing: border-box;
+color: rgb(226, 232, 240);
+display: block;
+font-family: Inter, system-ui, sans-serif;
+font-feature-settings: normal;
+font-kerning: auto;
+font-size: 16px;
+font-size-adjust: none;
+font-stretch: 100%;
+font-style: normal;
+font-weight: 400;
+height: 219.021px;
+line-height: 24px;
+unicode-bidi: isolate /*UA*/;
+width: 1131px;
+
+/* CSS variables */
+--text: #e2e8f0;
+```

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Patients{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><p class="eyebrow">Care directory</p><h1>Patients</h1><p class="muted">{{ pagination.total }} patient records</p></div>
+  {% if current_user.role in ['admin', 'receptionist'] %}<a class="button button-primary" href="{{ url_for('patients.new_patient') }}">Add patient</a>{% endif %}
+</div>
+<form class="filter-bar" method="get">
+  <label class="sr-only" for="patient-search">Search patients</label>
+  <input id="patient-search" class="text-input" type="search" name="q" value="{{ query }}" placeholder="Search name, code or phone" />
+  <label class="sr-only" for="gender-filter">Gender</label>
+  <select id="gender-filter" class="text-input" name="gender"><option value="">All genders</option>{% for gender in genders %}<option value="{{ gender }}" {% if selected_gender == gender %}selected{% endif %}>{{ gender }}</option>{% endfor %}</select>
+  <label class="sr-only" for="blood-filter">Blood group</label>
+  <select id="blood-filter" class="text-input" name="blood_group"><option value="">All blood groups</option>{% for group in blood_groups %}<option value="{{ group }}" {% if selected_blood_group == group %}selected{% endif %}>{{ group }}</option>{% endfor %}</select>
+  <button class="button button-primary" type="submit">Search</button>
+</form>
+{% if pagination.items %}
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Code</th><th>Name</th><th>Age</th><th>Gender</th><th>Phone</th><th>Blood group</th><th>Actions</th></tr></thead><tbody>
+{% for patient in pagination.items %}<tr>
+  <td data-label="Code"><a href="{{ url_for('patients.detail', patient_id=patient.id) }}">{{ patient.patient_code }}</a></td>
+  <td data-label="Name"><strong>{{ patient.full_name }}</strong></td>
+  <td data-label="Age">{{ patient.age }}</td>
+  <td data-label="Gender">{{ patient.gender }}</td>
+  <td data-label="Phone">{{ patient.phone }}</td>
+  <td data-label="Blood group">{{ patient.blood_group or '—' }}</td>
+  <td data-label="Actions" class="row-actions"><a href="{{ url_for('patients.detail', patient_id=patient.id) }}">View</a>{% if current_user.role in ['admin', 'receptionist'] %}<a href="{{ url_for('patients.edit', patient_id=patient.id) }}">Edit</a>{% endif %}</td>
+</tr>{% endfor %}
+</tbody></table></div>
+<nav class="pagination" aria-label="Patient pages">{% if pagination.has_prev %}<a href="{{ url_for('patients.list_patients', page=pagination.prev_num, q=query, gender=selected_gender, blood_group=selected_blood_group) }}">Previous</a>{% endif %}<span>Page {{ pagination.page }} of {{ pagination.pages or 1 }}</span>{% if pagination.has_next %}<a href="{{ url_for('patients.list_patients', page=pagination.next_num, q=query, gender=selected_gender, blood_group=selected_blood_group) }}">Next</a>{% endif %}</nav>
+{% else %}
+<section class="empty-panel"><span class="feature-icon">⌂</span><h2>No patients found</h2><p>Try a different search or register a new patient.</p>{% if current_user.role in ['admin', 'receptionist'] %}<a class="button button-primary" href="{{ url_for('patients.new_patient') }}">Add patient</a>{% endif %}</section>
+{% endif %}
+{% endblock %}

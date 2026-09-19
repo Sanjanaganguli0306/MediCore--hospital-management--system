@@ -1,0 +1,12 @@
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">{% include 'partials/_logo.html' %}<span class="workspace-label">CLINIC WORKSPACE</span></div>
+  <nav aria-label="Main navigation">
+    <span class="nav-section-label">Workspace</span>
+    <a class="{% if request.endpoint == 'main.dashboard' %}is-active{% endif %}" href="{{ url_for('main.dashboard') }}"><span class="nav-icon">⌂</span>Dashboard</a>
+    {% if current_user.role in ['admin', 'doctor', 'nurse', 'receptionist'] %}<a class="{% if request.endpoint and request.endpoint.startswith('patients.') %}is-active{% endif %}" href="{{ url_for('patients.list_patients') }}"><span class="nav-icon">◉</span>Patients</a>{% endif %}
+    {% if current_user.role in ['admin', 'doctor', 'nurse', 'receptionist'] %}<a class="{% if request.endpoint and request.endpoint.startswith('appointments.') %}is-active{% endif %}" href="{{ url_for('appointments.list_appointments') }}"><span class="nav-icon">◷</span>Appointments</a>{% endif %}
+    {% if current_user.role in ['admin', 'doctor', 'nurse'] %}<span class="nav-section-label nav-section-spaced">Clinical</span>{% if current_user.role == 'doctor' %}<a class="{% if request.endpoint == 'doctors.personal_profile' %}is-active{% endif %}" href="{{ url_for('doctors.personal_profile') }}"><span class="nav-icon">◉</span>My profile</a>{% endif %}<a class="{% if request.endpoint and request.endpoint.startswith('doctors.') and request.endpoint != 'doctors.personal_profile' %}is-active{% endif %}" href="{{ url_for('doctors.list_doctors') }}"><span class="nav-icon">✚</span>Doctors</a><a class="{% if request.endpoint and request.endpoint.startswith('prescriptions.') %}is-active{% endif %}" href="{{ url_for('prescriptions.list_prescriptions') }}"><span class="nav-icon">⌁</span>Prescriptions</a>{% endif %}
+    {% if current_user.role in ['admin', 'accountant', 'billing_staff'] %}<span class="nav-section-label nav-section-spaced">Operations</span><a class="{% if request.endpoint and request.endpoint.startswith('billing.') %}is-active{% endif %}" href="{{ url_for('billing.list_invoices') }}"><span class="nav-icon">▤</span>Billing</a>{% endif %}
+  </nav>
+  <div class="sidebar-note"><span class="sidebar-note-dot"></span><div><strong>Workspace online</strong><small>All systems operational</small></div></div>
+</aside>

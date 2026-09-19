@@ -1,0 +1,26 @@
+@page { size: A4; margin: 18mm; }
+* { box-sizing: border-box; }
+body { margin: 0; color: #000; background: #fff; font: 12pt/1.45 Georgia, serif; }
+.print-sheet { width: 100%; max-width: 180mm; margin: 0 auto; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: #000; text-decoration: none; font: 700 18pt/1.1 Arial, sans-serif; }
+.brand-mark { width: 42px; height: 42px; }
+.wordmark strong:last-child { color: #000; }
+.print-tagline { margin: 4px 0 12px; }
+.print-sheet hr { border: 0; border-top: 1px solid #000; }
+.print-sheet footer { margin-top: 28px; border-top: 1px solid #000; padding-top: 8px; font-size: 9pt; }
+.print-actions { margin: 16px auto; width: min(180mm, calc(100% - 32px)); }
+.print-actions button { padding: 8px 14px; border: 1px solid #000; background: #fff; cursor: pointer; }
+.print-title { display: flex; justify-content: space-between; gap: 24px; align-items: start; }
+.print-title h1 { margin: 6px 0; font-size: 2.2rem; }
+.print-title p { margin: 0; color: #475569; }
+.print-label { color: #0f766e !important; font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.print-doctor { display: grid; gap: 4px; text-align: right; }
+.print-doctor span { color: #475569; }
+.print-two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 22px 0; }
+.print-two-column p { margin: 5px 0 0; color: #475569; }
+.print-medicine-table { width: 100%; margin: 12px 0 26px; border-collapse: collapse; }
+.print-medicine-table th, .print-medicine-table td { padding: 10px 8px; border-bottom: 1px solid #cbd5e1; text-align: left; vertical-align: top; }
+.print-medicine-table th { color: #475569; font-size: .75rem; text-transform: uppercase; }
+.signature-line { width: 220px; margin: 58px 0 0 auto; padding-top: 8px; border-top: 1px solid #000; text-align: center; font-size: .8rem; }
+@media (max-width: 600px) { .print-sheet { padding: 24px; } .print-title, .print-two-column { display: grid; grid-template-columns: 1fr; } .print-doctor { text-align: left; } .print-medicine-table { font-size: .8rem; } }
+@media print { .print-actions { display: none; } body { background: #fff; } }

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <title>{% block title %}Dashboard{% endblock %} — {{ APP_NAME }}</title>
+</head>
+<body class="app-page">
+  <div class="app-shell">
+    {% include 'partials/_sidebar.html' %}
+    <div class="page-shell">
+      {% include 'partials/_navbar.html' %}
+      {% include 'partials/_flash.html' %}
+      <main class="page-content">{% block content %}{% endblock %}</main>
+      <footer class="site-footer">{{ APP_NAME }} Hospital Management System © 2026</footer>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/appointments.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/billing.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/prescriptions.js') }}"></script>
+</body>
+</html>

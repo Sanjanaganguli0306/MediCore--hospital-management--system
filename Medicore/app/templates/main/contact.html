@@ -1,0 +1,18 @@
+{% extends 'base_public.html' %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<section class="contact-hero-modern" aria-labelledby="contact-title">
+  <div><p class="saas-eyebrow">CONTACT MEDICORE <span aria-hidden="true">•</span> WE ARE HERE TO HELP</p><h1 id="contact-title">Let’s make care simpler.</h1><p class="contact-lede">Have a question about MediCore? Send a note and our team will route it to the right person.</p><div class="contact-details-modern"><div><span class="contact-detail-icon">◷</span><span><strong>Care team hours</strong><small>Monday–Friday, 09:00–17:00</small></span></div><div><span class="contact-detail-icon">@</span><span><strong>Email us directly</strong><a href="mailto:hello@medicore.local">hello@medicore.local</a></span></div></div></div>
+  <div class="contact-hero-visual"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=88" alt="Healthcare team collaborating in a clinical workspace" /><span class="contact-photo-note">Thoughtful technology<br />for thoughtful care.</span></div>
+</section>
+<section class="contact-panel-modern">
+  <div><p class="eyebrow">Contact MediCore</p><h2>Send an enquiry</h2><p class="muted">Tell us what you need and we will get back to you during care team hours.</p></div>
+  <form method="post" class="contact-form" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field-group"><label for="contact-name">Name</label><input class="text-input" id="contact-name" name="name" required /></div>
+    <div class="field-group"><label for="contact-email">Email</label><input class="text-input" id="contact-email" name="email" type="email" required /></div>
+    <div class="field-group"><label for="contact-message">Message</label><textarea class="text-input" id="contact-message" name="message" rows="5" required></textarea></div>
+    <button class="button button-primary" type="submit">Send message <span aria-hidden="true">→</span></button>
+  </form>
+</section>
+{% endblock %}

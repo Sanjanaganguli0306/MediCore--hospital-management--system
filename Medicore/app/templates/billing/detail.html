@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{ invoice.invoice_no }}{% endblock %}
+{% block content %}
+<div class="invoice-page">
+  <div class="page-heading invoice-heading">
+    <div><p class="eyebrow">Revenue desk</p><h1>Invoice {{ invoice.invoice_no }}</h1><p class="muted">Issued {{ invoice.issue_date.strftime('%d %b %Y') }}{% if invoice.due_date %} · Due {{ invoice.due_date.strftime('%d %b %Y') }}{% endif %}</p></div>
+    <div class="invoice-actions"><span class="status-pill status-{{ invoice.status }}">{{ invoice.status|title }}</span><a class="button button-quiet" href="{{ url_for('billing.list_invoices') }}">All invoices</a><button class="button button-quiet" type="button" onclick="window.print()">Print</button></div>
+  </div>
+  <section class="invoice-meta">
+    <div><span class="invoice-label">Billed to</span><strong>{{ invoice.patient.full_name }}</strong><span>{{ invoice.patient.patient_code }} · {{ invoice.patient.phone }}</span>{% if invoice.patient.email %}<span>{{ invoice.patient.email }}</span>{% endif %}</div>
+    <div><span class="invoice-label">Care details</span>{% if invoice.appointment %}<strong>{{ invoice.appointment.appointment_date.strftime('%d %b %Y') }} · {{ invoice.appointment.appointment_time.strftime('%H:%M') }}</strong><span>Dr. {{ invoice.appointment.doctor.full_name.removeprefix('Dr. ') }}</span><span>{{ invoice.appointment.reason or 'Clinical visit' }}</span>{% else %}<strong>General charge</strong><span>No appointment linked</span>{% endif %}</div>
+    <div><span class="invoice-label">Payment summary</span><strong>₹{{ '%.2f'|format(invoice.balance) }} due</strong><span>{{ invoice.payment_method|default('Payment pending', true)|title }}</span><span>{{ invoice.status|title }} account</span></div>
+  </section>
+  <section class="invoice-layout">
+    <div class="invoice-card">
+      <div class="invoice-card-heading"><div><span class="invoice-label">Statement</span><h2>Charges</h2></div><span class="invoice-count">{{ invoice.invoice_items|length }} line{% if invoice.invoice_items|length != 1 %}s{% endif %}</span></div>
+      <div class="invoice-table-wrap"><table class="invoice-table"><thead><tr><th>Description</th><th>Qty</th><th>Unit price</th><th class="invoice-amount">Amount</th></tr></thead><tbody>{% for item in invoice.invoice_items %}<tr><td><strong>{{ item.description }}</strong></td><td>{{ item.quantity }}</td><td>₹{{ '%.2f'|format(item.unit_price) }}</td><td class="invoice-amount">₹{{ '%.2f'|format(item.amount) }}</td></tr>{% endfor %}</tbody></table></div>
+      <dl class="invoice-totals"><dt>Subtotal</dt><dd>₹{{ '%.2f'|format(invoice.subtotal) }}</dd><dt>Tax <span>({{ '%.2f'|format(invoice.tax_percent) }}%)</span></dt><dd>₹{{ '%.2f'|format(invoice.subtotal * invoice.tax_percent / 100) }}</dd><dt>Discount</dt><dd>- ₹{{ '%.2f'|format(invoice.discount) }}</dd><dt class="invoice-total-line">Total</dt><dd class="invoice-total-line">₹{{ '%.2f'|format(invoice.total) }}</dd><dt>Paid to date</dt><dd>₹{{ '%.2f'|format(invoice.amount_paid) }}</dd><dt class="invoice-balance-line">Balance due</dt><dd class="invoice-balance-line">₹{{ '%.2f'|format(invoice.balance) }}</dd></dl>
+    </div>
+    <div class="payment-card">
+      <div class="invoice-card-heading"><div><span class="invoice-label">Settlement</span><h2>Record payment</h2></div><span class="payment-mark" aria-hidden="true">₹</span></div>
+      {% if invoice.balance > 0 %}<p class="muted">Apply a payment to update this invoice's balance and status.</p><form method="post" action="{{ url_for('billing.record_payment', invoice_id=invoice.id) }}" class="stack-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><div class="field-group"><label for="amount">Payment amount</label><input class="text-input" id="amount" name="amount" type="number" min="0.01" max="{{ invoice.balance }}" step="0.01" placeholder="0.00" required></div><div class="field-group"><label for="payment_method">Payment method</label><select class="text-input" id="payment_method" name="payment_method"><option value="cash">Cash</option><option value="card">Card</option><option value="upi">UPI</option><option value="insurance">Insurance</option></select></div><button class="button button-primary" type="submit">Record payment</button></form>{% else %}<div class="paid-state"><span aria-hidden="true">✓</span><strong>Fully paid</strong><p>No balance remains on this invoice.</p></div>{% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

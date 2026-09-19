@@ -1,0 +1,40 @@
+{% extends 'base_auth.html' %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+<h1>Create your {{ APP_NAME }} account</h1>
+<p class="muted">Set up a staff account for the care workspace.</p>
+<form method="post" class="stack-form" novalidate>
+  {{ form.hidden_tag() }}
+  {% for field in [form.full_name, form.username, form.email] %}
+    <div class="field-group">
+      {{ field.label }}
+      {{ field(class="text-input") }}
+      {% for error in field.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+    </div>
+  {% endfor %}
+  <div class="field-group">
+    {{ form.role.label }}
+    {{ form.role(class="text-input", data_role_select=true) }}
+    <span class="role-help" data-role-help>Receptionists can manage patient records and appointments.</span>
+    {% for error in form.role.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+  </div>
+  <div class="field-group">
+    {{ form.password.label }}
+    <div class="password-control">
+      {{ form.password(class="text-input") }}
+      <button class="password-toggle" type="button" data-password-toggle aria-controls="password" aria-label="Show password" title="Show password">&#128065;</button>
+    </div>
+    {% for error in form.password.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+  </div>
+  <div class="field-group">
+    {{ form.confirm_password.label }}
+    <div class="password-control">
+      {{ form.confirm_password(class="text-input") }}
+      <button class="password-toggle" type="button" data-password-toggle aria-controls="confirm_password" aria-label="Show confirm password" title="Show confirm password">&#128065;</button>
+    </div>
+    {% for error in form.confirm_password.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+  </div>
+  {{ form.submit(class="button button-primary") }}
+</form>
+<p class="auth-switch">Already registered? <a href="{{ url_for('auth.login') }}">Sign in</a></p>
+{% endblock %}

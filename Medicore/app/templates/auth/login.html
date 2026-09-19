@@ -1,0 +1,14 @@
+{% extends 'base_auth.html' %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<h1>Sign in to {{ APP_NAME }}</h1>
+<p class="muted">Access your care workspace.</p>
+<form method="post" class="stack-form" novalidate>
+	{{ form.hidden_tag() }}
+	<div class="field-group">{{ form.username.label }}{{ form.username(class="text-input", autofocus=true) }}{% for error in form.username.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+	<div class="field-group">{{ form.password.label }}{{ form.password(class="text-input") }}{% for error in form.password.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+	<label class="checkbox-label">{{ form.remember_me() }} {{ form.remember_me.label.text }}</label>
+	{{ form.submit(class="button button-primary") }}
+</form>
+<p class="auth-switch">New to {{ APP_NAME }}? <a href="{{ url_for('auth.register') }}">Create an account</a></p>
+{% endblock %}

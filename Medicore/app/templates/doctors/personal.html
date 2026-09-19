@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}My profile{% endblock %}
+{% block content %}
+<section class="personal-profile-hero">
+  <div class="personal-profile-main">
+    <div>
+      <p class="eyebrow">My clinician profile</p>
+      <h1>{{ doctor.full_name }}</h1>
+      <p class="personal-profile-specialty">{{ doctor.specialization }}</p>
+      <div class="chip-row">
+        <span class="status-pill status-{{ doctor.status }}"><span aria-hidden="true">●</span>{{ doctor.status|replace('_', ' ')|title }}</span>
+        <span class="chip">{{ doctor.qualification or 'Qualification not recorded' }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="personal-profile-actions">
+    <span class="personal-profile-note">Assigned details are managed by your administrator.</span>
+  </div>
+</section>
+
+<section class="personal-metric-grid" aria-label="Practice overview">
+  <article><span>Appointments</span><strong>{{ appointment_count }}</strong><small>All linked visits</small></article>
+  <article><span>Completed visits</span><strong>{{ completed_count }}</strong><small>Care delivered</small></article>
+  <article><span>Patients served</span><strong>{{ patient_count }}</strong><small>Unique patient records</small></article>
+  <article><span>Experience</span><strong>{{ doctor.years_experience or 0 }}</strong><small>Years in practice</small></article>
+</section>
+
+<div class="personal-profile-layout">
+  <section class="personal-card personal-details-card">
+    <div class="personal-card-heading"><div><p class="eyebrow">Professional record</p><h2>Profile details</h2></div><span class="personal-heading-mark" aria-hidden="true">◉</span></div>
+    <dl class="personal-detail-list">
+      <div><dt>Full name</dt><dd>{{ doctor.full_name }}</dd></div>
+      <div><dt>Specialization</dt><dd>{{ doctor.specialization }}</dd></div>
+      <div><dt>Qualifications</dt><dd>{{ doctor.qualification or 'Not recorded' }}</dd></div>
+      <div><dt>Experience</dt><dd>{{ doctor.years_experience or 0 }} years</dd></div>
+      <div><dt>Hospital branch</dt><dd>{{ doctor.hospital_branch or 'Not assigned' }}</dd></div>
+      <div><dt>Professional email</dt><dd>{{ doctor.email or 'Not recorded' }}</dd></div>
+      <div><dt>Phone</dt><dd>{{ doctor.phone or 'Not recorded' }}</dd></div>
+      <div><dt>Consultation fee</dt><dd>₹{{ '%.2f'|format(doctor.consultation_fee) }}</dd></div>
+    </dl>
+    <div class="personal-bio"><span>Professional biography</span><p>{{ doctor.bio or 'A professional biography has not been added yet.' }}</p></div>
+  </section>
+
+  <section class="personal-card personal-availability-card">
+    <div class="personal-card-heading"><div><p class="eyebrow">Practice schedule</p><h2>Weekly availability</h2></div><span class="personal-heading-mark" aria-hidden="true">◷</span></div>
+    <div class="personal-availability-list">
+      {% for key, short, label in days %}
+      <div class="personal-availability-day {% if doctor.works_on(short) %}is-available{% else %}is-unavailable{% endif %}">
+        <strong>{{ label }}</strong>
+        {% if doctor.works_on(short) %}<span>{{ doctor.available_from.strftime('%H:%M') if doctor.available_from else 'Hours pending' }} - {{ doctor.available_to.strftime('%H:%M') if doctor.available_to else 'Hours pending' }}</span><em>Available</em>{% else %}<span>Not scheduled</span><em>Unavailable</em>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+<section class="personal-card personal-appointments-card">
+  <div class="personal-card-heading"><div><p class="eyebrow">Care delivery</p><h2>Upcoming appointments</h2></div><a class="button button-quiet" href="{{ url_for('appointments.list_appointments') }}">View schedule</a></div>
+  {% if upcoming %}<div class="personal-appointment-list">{% for appointment in upcoming %}<article><div><strong>{{ appointment.appointment_date.strftime('%d %b %Y') }} · {{ appointment.appointment_time.strftime('%H:%M') }}</strong><span>{{ appointment.patient.full_name }} · {{ appointment.reason or 'Clinical visit' }}</span></div><span class="status-pill status-scheduled">Scheduled</span></article>{% endfor %}</div>{% else %}<div class="personal-empty-state"><span aria-hidden="true">◷</span><p>No upcoming appointments are scheduled.</p></div>{% endif %}
+</section>
+{% endblock %}

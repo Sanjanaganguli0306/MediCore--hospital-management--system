@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}New prescription{% endblock %}
+{% block content %}
+<div class="page-heading prescription-heading">
+  <div>
+    <p class="eyebrow">Clinical desk</p>
+    <h1>New prescription</h1>
+    <p class="muted">Connect a completed visit to a clear treatment plan.</p>
+  </div>
+  <a class="button button-quiet" href="{{ url_for('prescriptions.list_prescriptions') }}">All prescriptions</a>
+</div>
+
+{% if not appointments %}
+<section class="empty-panel prescription-empty">
+  <span class="feature-icon">✓</span>
+  <h2>No completed visits awaiting a prescription</h2>
+  <p>Complete an appointment first, then return here to record the treatment plan.</p>
+  <a class="button button-primary" href="{{ url_for('appointments.list_appointments') }}">View appointments</a>
+</section>
+{% else %}
+<form method="post" class="patient-form prescription-form" data-prescription-form novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <section class="form-section prescription-step">
+    <div class="prescription-step-heading">
+      <span class="prescription-step-number">01</span>
+      <div><h2>Select the completed visit</h2><p class="muted">Start with the patient, then choose the visit that needs a treatment plan.</p></div>
+    </div>
+    <div class="form-grid">
+      <div class="field-group">
+        <label for="prescription-patient">Patient</label>
+        <select class="text-input" id="prescription-patient" name="patient_id" data-prescription-patient required>
+          <option value="">Select a patient</option>
+          {% for patient in patients %}<option value="{{ patient.id }}" {% if selected_patient_id == patient.id %}selected{% endif %}>{{ patient.full_name }} · {{ patient.patient_code }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="appointment-id">Completed visit</label>
+        <select class="text-input" id="appointment-id" name="appointment_id" data-prescription-appointment required>
+          <option value="">Select a completed visit</option>
+          {% for appointment in appointments %}<option value="{{ appointment.id }}" data-patient-id="{{ appointment.patient_id }}" data-date="{{ appointment.appointment_date.strftime('%d %b %Y') }}" data-time="{{ appointment.appointment_time.strftime('%H:%M') }}" data-doctor="{{ appointment.doctor.full_name }}" data-reason="{{ appointment.reason or 'General consultation' }}" {% if selected_id == appointment.id %}selected{% endif %}>{{ appointment.appointment_date.strftime('%d %b %Y') }} · {{ appointment.appointment_time.strftime('%H:%M') }} · {{ appointment.doctor.full_name }}</option>{% endfor %}
+        </select>
+        <span class="role-help" data-prescription-appointment-help>Select a patient to see eligible completed visits.</span>
+      </div>
+    </div>
+    <div class="visit-summary" data-visit-summary hidden aria-live="polite">
+      <span class="visit-summary-icon" aria-hidden="true">✓</span>
+      <div><strong data-visit-title>Completed visit selected</strong><span data-visit-description></span></div>
+    </div>
+  </section>
+
+  <section class="form-section prescription-step">
+    <div class="prescription-step-heading">
+      <span class="prescription-step-number">02</span>
+      <div><h2>Assessment and follow-up</h2><p class="muted">Document the clinical assessment and the next planned review.</p></div>
+    </div>
+    <div class="form-grid">
+      <div class="field-group"><label for="diagnosis">Diagnosis</label><textarea class="text-input" id="diagnosis" name="diagnosis" rows="4" maxlength="2000" placeholder="Clinical diagnosis or assessment">{{ form_data.get('diagnosis', '') }}</textarea></div>
+      <div class="field-group"><label for="advice">Advice</label><textarea class="text-input" id="advice" name="advice" rows="4" maxlength="2000" placeholder="Care advice, precautions, or referrals">{{ form_data.get('advice', '') }}</textarea></div>
+      <div class="field-group"><label for="follow-up-date">Follow-up date</label><input class="text-input" id="follow-up-date" name="follow_up_date" type="date" min="{{ today }}" value="{{ form_data.get('follow_up_date', '') }}"><span class="role-help">Optional. Choose today or a future date.</span></div>
+    </div>
+  </section>
+
+  <section class="form-section prescription-step">
+    <div class="prescription-step-heading prescription-medicine-heading">
+      <span class="prescription-step-number">03</span>
+      <div><h2>Medicines</h2><p class="muted">Add the medication, dosage, frequency, duration, and any patient instructions.</p></div>
+      <button class="button button-quiet" type="button" data-add-medicine><span aria-hidden="true">＋</span> Add medicine</button>
+    </div>
+    <div class="medicine-list" data-medicine-list>
+      {% for row in medicine_rows %}
+      <article class="medicine-row" data-medicine-row>
+        <div class="field-group"><label>Medicine</label><input class="text-input" name="medicine" value="{{ row.medicine }}" maxlength="120" placeholder="e.g. Amoxicillin" required></div>
+        <div class="field-group"><label>Dosage</label><input class="text-input" name="dosage" value="{{ row.dosage }}" maxlength="80" placeholder="e.g. 500 mg"></div>
+        <div class="field-group"><label>Frequency</label><input class="text-input" name="frequency" value="{{ row.frequency }}" maxlength="80" placeholder="e.g. Twice daily"></div>
+        <div class="field-group"><label>Duration</label><input class="text-input" name="duration" value="{{ row.duration }}" maxlength="80" placeholder="e.g. 5 days"></div>
+        <div class="field-group field-wide"><label>Instructions</label><input class="text-input" name="instructions" value="{{ row.instructions }}" maxlength="500" placeholder="e.g. Take after meals"><button class="link-button danger-link remove-medicine" type="button">Remove medicine</button></div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="form-actions prescription-actions">
+    <a class="button button-quiet" href="{{ url_for('prescriptions.list_prescriptions') }}">Cancel</a>
+    <button class="button button-primary" type="submit"><span aria-hidden="true">✓</span> Save prescription</button>
+  </div>
+</form>
+{% endif %}
+{% endblock %}

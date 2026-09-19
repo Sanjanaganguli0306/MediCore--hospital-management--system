@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}" />
+  <title>{% block title %}Print{% endblock %} — {{ APP_NAME }}</title>
+</head>
+<body>
+  <div class="print-actions"><button type="button" onclick="window.print()">Print</button></div>
+  <main class="print-sheet">
+    {% include 'partials/_logo.html' %}
+    <p class="print-tagline">Care, coordinated.</p>
+    <hr />
+    {% block content %}{% endblock %}
+    <footer>{{ APP_NAME }} Hospital Management System © 2026</footer>
+  </main>
+</body>
+</html>

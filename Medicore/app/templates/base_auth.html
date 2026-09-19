@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <title>{% block title %}Sign in{% endblock %} — {{ APP_NAME }}</title>
+</head>
+<body class="auth-page">
+  <button class="icon-button auth-theme-toggle theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
+  <main class="auth-card">
+    {% include 'partials/_logo.html' %}
+    {% include 'partials/_flash.html' %}
+    {% block content %}{% endblock %}
+  </main>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

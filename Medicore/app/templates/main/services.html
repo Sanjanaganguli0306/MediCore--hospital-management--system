@@ -1,0 +1,15 @@
+{% extends 'base_public.html' %}
+{% block title %}Services{% endblock %}
+{% block content %}
+<section class="services-hero-modern" aria-labelledby="services-title">
+  <div><p class="saas-eyebrow">THE MEDICORE PLATFORM <span aria-hidden="true">•</span> BUILT FOR MOMENTUM</p><h1 id="services-title">The right context, at the right moment.</h1><p class="services-lede">One calm workspace for the clinical and operational work that keeps a hospital moving.</p></div>
+  <div class="services-hero-visual"><img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1400&q=88" alt="Clinician reviewing a patient's information with a colleague" /><div class="services-photo-label"><span>01</span><strong>Connected by design</strong></div></div>
+</section>
+<section class="service-grid-modern" aria-label="MediCore services">
+  <div class="service-grid-intro"><p class="saas-eyebrow">ONE CONNECTED SYSTEM</p><h2>Every module has a job. Together, they create flow.</h2></div>
+  <div class="service-cards-modern"><article class="service-card-modern"><span class="service-card-number">01</span><span class="service-icon" aria-hidden="true">⌂</span><h2>Patient records</h2><p>Keep demographics, history, allergies, visits, and contacts organized around the patient.</p><a href="{{ url_for('auth.login') }}">Explore records <span aria-hidden="true">↗</span></a></article>
+  <article class="service-card-modern"><span class="service-card-number">02</span><span class="service-icon" aria-hidden="true">◷</span><h2>Appointments</h2><p>Find available slots, reduce conflicts, and connect each visit to the right clinician.</p><a href="{{ url_for('auth.login') }}">Explore scheduling <span aria-hidden="true">↗</span></a></article>
+  <article class="service-card-modern"><span class="service-card-number">03</span><span class="service-icon" aria-hidden="true">▤</span><h2>Billing clarity</h2><p>Follow invoices, payments, and outstanding balances without leaving the care story.</p><a href="{{ url_for('auth.login') }}">Explore billing <span aria-hidden="true">↗</span></a></article>
+  <article class="service-card-modern"><span class="service-card-number">04</span><span class="service-icon" aria-hidden="true">✚</span><h2>Treatment continuity</h2><p>Give doctors the context they need to make thoughtful decisions at every stage of care.</p><a href="{{ url_for('auth.login') }}">Explore clinical tools <span aria-hidden="true">↗</span></a></article></div>
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit patient' if patient else 'Add patient' }}{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Patient records</p><h1>{{ 'Edit patient' if patient else 'Register patient' }}</h1>{% if patient %}<p class="muted">{{ patient.patient_code }} is read-only.</p>{% endif %}</div></div>
+<form method="post" class="patient-form" novalidate>
+  {{ form.hidden_tag() }}
+  <section class="form-section"><h2>Personal details</h2><div class="form-grid">
+    <div class="field-group">{{ form.first_name.label }}{{ form.first_name(class="text-input") }}{% for error in form.first_name.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+    <div class="field-group">{{ form.last_name.label }}{{ form.last_name(class="text-input") }}{% for error in form.last_name.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+    <div class="field-group">{{ form.dob.label }}{{ form.dob(class="text-input") }}{% for error in form.dob.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+    <div class="field-group">{{ form.gender.label }}{{ form.gender(class="text-input") }}{% for error in form.gender.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+    <div class="field-group">{{ form.blood_group.label }}{{ form.blood_group(class="text-input") }}{% for error in form.blood_group.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+  </div></section>
+  <section class="form-section"><h2>Contact</h2><div class="form-grid">
+    <div class="field-group">{{ form.phone.label }}{{ form.phone(class="text-input", inputmode="numeric") }}{% for error in form.phone.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+    <div class="field-group">{{ form.email.label }}{{ form.email(class="text-input") }}{% for error in form.email.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+    <div class="field-group field-wide">{{ form.address.label }}{{ form.address(class="text-input", rows=3) }}{% for error in form.address.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+  </div></section>
+  <section class="form-section"><h2>Medical info</h2><div class="form-grid"><div class="field-group field-wide">{{ form.allergies.label }}{{ form.allergies(class="text-input", rows=3, placeholder="List known allergies or write None") }}{% for error in form.allergies.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div></div></section>
+  <section class="form-section"><h2>Emergency contact</h2><div class="form-grid">
+    <div class="field-group">{{ form.emergency_contact_name.label }}{{ form.emergency_contact_name(class="text-input") }}{% for error in form.emergency_contact_name.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+    <div class="field-group">{{ form.emergency_contact_phone.label }}{{ form.emergency_contact_phone(class="text-input", inputmode="numeric") }}{% for error in form.emergency_contact_phone.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+  </div></section>
+  <div class="form-actions"><a class="button button-quiet" href="{{ url_for('patients.list_patients') }}">Cancel</a>{{ form.submit(class="button button-primary") }}</div>
+</form>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}New invoice{% endblock %}
+{% block content %}
+<div class="page-heading billing-heading">
+  <div>
+    <p class="eyebrow">Revenue desk</p>
+    <h1>New invoice</h1>
+    <p class="muted">Connect billing to a patient record and, when needed, the completed clinical visit.</p>
+  </div>
+  <a class="button button-quiet" href="{{ url_for('billing.list_invoices') }}">All invoices</a>
+</div>
+
+<form method="post" class="patient-form billing-form" data-billing-form novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <section class="form-section billing-step">
+    <div class="billing-step-heading"><span class="billing-step-number">01</span><div><h2>Patient and visit</h2><p class="muted">Choose the patient, then link an eligible completed visit when billing clinical care.</p></div></div>
+    <div class="form-grid">
+      <div class="field-group">
+        <label for="patient-id">Patient</label>
+        <select class="text-input" id="patient-id" name="patient_id" data-billing-patient required>
+          <option value="">Select patient</option>
+          {% for patient in patients %}<option value="{{ patient.id }}" {% if selected_patient_id == patient.id %}selected{% endif %}>{{ patient.patient_code }} · {{ patient.full_name }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="appointment-id">Completed visit</label>
+        <select class="text-input" id="appointment-id" name="appointment_id" data-billing-appointment>
+          <option value="">General charge (no visit linked)</option>
+          {% for appointment in appointments %}<option value="{{ appointment.id }}" data-patient-id="{{ appointment.patient_id }}" data-description="Consultation - {{ appointment.doctor.full_name }}" data-fee="{{ appointment.doctor.consultation_fee }}" {% if selected_appointment_id == appointment.id %}selected{% endif %}>{{ appointment.appointment_date.strftime('%d %b %Y') }} · {{ appointment.appointment_time.strftime('%H:%M') }} · Dr. {{ appointment.doctor.full_name.removeprefix('Dr. ') }}</option>{% endfor %}
+        </select>
+        <span class="role-help" data-billing-appointment-help>Select a patient to view completed visits that are ready for billing.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section billing-step">
+    <div class="billing-step-heading"><span class="billing-step-number">02</span><div><h2>Charge details</h2><p class="muted">Record one clear charge line and the payment collected today, if any.</p></div></div>
+    <div class="form-grid">
+      <div class="field-group field-wide"><label for="description">Charge description</label><input class="text-input" id="description" name="description" value="{{ form_data.get('description', default_description) }}" required maxlength="200" placeholder="Consultation or treatment"></div>
+      <div class="field-group"><label for="due-date">Due date</label><input class="text-input" id="due-date" name="due_date" type="date" value="{{ form_data.get('due_date', today) }}" required></div>
+      <div class="field-group"><label for="quantity">Quantity</label><input class="text-input" id="quantity" name="quantity" type="number" min="1" value="{{ form_data.get('quantity', '1') }}" required></div>
+      <div class="field-group"><label for="unit-price">Unit price</label><input class="text-input" id="unit-price" name="unit_price" type="number" min="0" step="0.01" value="{{ form_data.get('unit_price', default_unit_price) }}" required></div>
+      <div class="field-group"><label for="tax-percent">Tax (%)</label><input class="text-input" id="tax-percent" name="tax_percent" type="number" min="0" step="0.01" value="{{ form_data.get('tax_percent', '0') }}"></div>
+      <div class="field-group"><label for="discount">Discount</label><input class="text-input" id="discount" name="discount" type="number" min="0" step="0.01" value="{{ form_data.get('discount', '0') }}"></div>
+      <div class="field-group"><label for="amount-paid">Amount paid</label><input class="text-input" id="amount-paid" name="amount_paid" type="number" min="0" step="0.01" value="{{ form_data.get('amount_paid', '0') }}"></div>
+      <div class="field-group"><label for="payment-method">Payment method</label><select class="text-input" id="payment-method" name="payment_method"><option value="">Select method</option>{% for method in ['cash', 'card', 'upi', 'insurance'] %}<option value="{{ method }}" {% if form_data.get('payment_method') == method %}selected{% endif %}>{{ method|title }}</option>{% endfor %}</select></div>
+    </div>
+  </section>
+
+  <div class="form-actions billing-actions"><a class="button button-quiet" href="{{ url_for('billing.list_invoices') }}">Cancel</a><button class="button button-primary" type="submit">Create invoice</button></div>
+</form>
+{% endblock %}

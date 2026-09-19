@@ -1,0 +1,4 @@
+{% if current_user.is_authenticated %}
+  <span class="user-greeting">{{ current_user.full_name }}</span>
+  <form method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="button button-quiet" type="submit">Sign out</button></form>
+{% endif %}

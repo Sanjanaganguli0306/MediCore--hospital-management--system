@@ -1,0 +1,3 @@
+{% extends 'base_auth.html' %}
+{% block title %}Something went wrong{% endblock %}
+{% block content %}<h1>Something went wrong</h1><p class="muted">MediCore could not complete that request.</p><a class="button button-primary" href="{{ url_for('main.dashboard') }}">Back to dashboard</a>{% endblock %}

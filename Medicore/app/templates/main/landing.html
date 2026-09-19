@@ -1,0 +1,43 @@
+{% extends 'base_public.html' %}
+{% block title %}Intelligent hospital management{% endblock %}
+{% block content %}
+<section class="saas-hero" aria-labelledby="hero-title">
+  <div class="saas-hero-copy">
+    <p class="saas-eyebrow">SMARTER HEALTHCARE <span aria-hidden="true">•</span> INTELLIGENT MANAGEMENT</p>
+    <h1 id="hero-title">Built Around Care.<br />Powered by <span>Intelligence.</span></h1>
+    <p class="saas-hero-description">A unified hospital management platform that connects patients, doctors, appointments, prescriptions, records, and operations—all in one intelligent ecosystem.</p>
+    <div class="saas-hero-actions">
+      <a class="button button-primary" href="{{ url_for('auth.login') }}">Get Started <span aria-hidden="true">↗</span></a>
+      <a class="button button-quiet" href="{{ url_for('main.services') }}">Explore Platform</a>
+    </div>
+    <div class="saas-trust-row" aria-label="Platform capabilities"><span><i aria-hidden="true">✓</i> Secure workspace</span><span><i aria-hidden="true">✓</i> Connected care</span><span><i aria-hidden="true">✓</i> Built for teams</span></div>
+  </div>
+  <div class="product-visual" aria-label="MediCore hospital management dashboard preview">
+    <div class="product-window-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="window-title">MediCore / Overview</span><span class="window-status"><i></i> Live</span></div>
+    <div class="product-window-body">
+      <aside class="product-mini-sidebar" aria-hidden="true"><span class="mini-logo">＋</span><span class="mini-nav is-current">⌂</span><span class="mini-nav">◉</span><span class="mini-nav">◷</span><span class="mini-nav">⌁</span><span class="mini-nav">▤</span></aside>
+      <div class="product-dashboard">
+        <div class="product-dashboard-head"><div><span class="dashboard-overline">OVERVIEW</span><strong>Good morning, Doctor</strong></div><span class="product-avatar">DR</span></div>
+        <div class="product-stats"><div><span>Patients</span><strong>2,480</strong><small class="trend-up">↑ 12.8%</small></div><div><span>Appointments</span><strong>126</strong><small class="trend-up">↑ 8.4%</small></div><div><span>Care plans</span><strong>89</strong><small class="trend-stable">Stable</small></div></div>
+        <div class="product-dashboard-grid"><div class="schedule-card"><div class="product-card-head"><strong>Today's schedule</strong><span>View all →</span></div><div class="schedule-row"><span class="schedule-time">09:30</span><span class="schedule-dot dot-teal"></span><span><strong>Amelia Carter</strong><small>General consultation</small></span><b>›</b></div><div class="schedule-row"><span class="schedule-time">11:15</span><span class="schedule-dot dot-blue"></span><span><strong>Marcus Lee</strong><small>Follow-up appointment</small></span><b>›</b></div><div class="schedule-row"><span class="schedule-time">13:00</span><span class="schedule-dot dot-orange"></span><span><strong>Sofia Patel</strong><small>Care plan review</small></span><b>›</b></div></div><div class="insight-card"><div class="product-card-head"><strong>Care activity</strong><span>7 days</span></div><div class="activity-chart" aria-hidden="true"><i style="height:38%"></i><i style="height:54%"></i><i style="height:45%"></i><i style="height:70%"></i><i style="height:58%"></i><i style="height:82%"></i><i style="height:68%"></i></div><div class="chart-labels"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div></div></div>
+      </div>
+    </div>
+    <div class="floating-insight"><span class="insight-icon">✦</span><span><strong>Smart insight</strong><small>3 follow-ups due today</small></span><b>→</b></div>
+  </div>
+</section>
+<section class="home-intro">
+  <div><p class="eyebrow">Built for better handoffs</p><h2>A clearer view of every patient moment.</h2></div>
+  <p>From the first appointment to the final invoice, MediCore gives your team one place to move care forward with confidence.</p>
+</section>
+<section class="feature-grid" aria-label="Core modules">
+  <article class="feature-card"><span class="feature-icon">⌂</span><h2>Patient records</h2><p>Keep every patient detail close at hand.</p></article>
+  <article class="feature-card"><span class="feature-icon">◷</span><h2>Appointments</h2><p>Make every visit easier to coordinate.</p></article>
+  <article class="feature-card"><span class="feature-icon">▤</span><h2>Billing</h2><p>Track invoices and payments with clarity.</p></article>
+  <article class="feature-card"><span class="feature-icon">✚</span><h2>Prescriptions</h2><p>Connect treatment plans to patient history.</p></article>
+</section>
+<section class="stats-band" aria-label="MediCore capabilities">
+  <div><strong>1</strong><span>Connected workspace</span></div>
+  <div><strong>4</strong><span>Core care modules</span></div>
+  <div><strong>24/7</strong><span>Ready for your team</span></div>
+</section>
+{% endblock %}

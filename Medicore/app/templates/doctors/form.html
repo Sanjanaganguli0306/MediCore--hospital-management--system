@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit doctor profile' if doctor else 'Add doctor profile' }}{% endblock %}
+{% block content %}
+{% set portrait_url = url_for('static', filename=doctor.photo_url) if doctor and doctor.photo_url and not doctor.photo_url.startswith(('http://', 'https://')) else (doctor.photo_url if doctor and doctor.photo_url else 'https://api.dicebear.com/9.x/personas/svg?backgroundColor=dbeafe&seed=' ~ (doctor.id if doctor else 'new-clinician')) %}
+<div class="page-heading doctor-edit-heading">
+  <div>
+    <p class="eyebrow">Clinical directory</p>
+    <h1>{{ 'Edit doctor profile' if doctor else 'Create doctor profile' }}</h1>
+    <p class="muted">Maintain a complete clinician record, including practice details and appointment availability.</p>
+  </div>
+  <a class="button button-quiet" href="{{ url_for('doctors.detail', doctor_id=doctor.id) if doctor else url_for('doctors.list_doctors') }}">Cancel</a>
+</div>
+
+<form method="post" class="patient-form doctor-edit-form" enctype="multipart/form-data" novalidate>
+  {{ form.hidden_tag() }}
+  <div class="doctor-edit-layout">
+    <aside class="doctor-edit-summary">
+      <div class="doctor-avatar doctor-avatar--editor"><img src="{{ portrait_url }}" alt="Portrait preview" data-doctor-photo-preview></div>
+      <p class="eyebrow">Profile preview</p>
+      <h2 data-doctor-preview-name>{{ doctor.full_name if doctor else 'New clinician' }}</h2>
+      <p class="doctor-edit-specialty" data-doctor-preview-specialty>{{ doctor.specialization if doctor else 'Specialization pending' }}</p>
+      <span class="status-pill status-{{ doctor.status if doctor else 'active' }}" data-doctor-preview-status>{{ (doctor.status|replace('_', ' ')|title) if doctor else 'Active' }}</span>
+      <dl class="doctor-edit-summary-list">
+        <div><dt>Practice</dt><dd data-doctor-preview-branch>{{ doctor.hospital_branch if doctor and doctor.hospital_branch else 'Branch pending' }}</dd></div>
+        <div><dt>Experience</dt><dd data-doctor-preview-experience>{{ (doctor.years_experience ~ ' years') if doctor and doctor.years_experience is not none else 'Not recorded' }}</dd></div>
+      </dl>
+      <p class="muted">Changes are visible in the clinician directory after saving.</p>
+    </aside>
+
+    <div class="doctor-edit-content">
+      <section class="form-section doctor-edit-section">
+        <div class="doctor-edit-section-heading"><span class="doctor-edit-step">01</span><div><h2>Professional identity</h2><p class="muted">How this clinician appears in the directory and appointment booking.</p></div></div>
+        <div class="form-grid">
+          <div class="field-group">{{ form.full_name.label }}{{ form.full_name(class="text-input", data_doctor_preview="name", autocomplete="name") }}{% for error in form.full_name.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group">{{ form.specialization.label }}{{ form.specialization(class="text-input", data_doctor_preview="specialty") }}{% for error in form.specialization.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group">{{ form.qualification.label }}{{ form.qualification(class="text-input", placeholder="e.g. MBBS, MD") }}{% for error in form.qualification.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group">{{ form.years_experience.label }}{{ form.years_experience(class="text-input", min=0, data_doctor_preview="experience") }}{% for error in form.years_experience.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group">{{ form.hospital_branch.label }}{{ form.hospital_branch(class="text-input", data_doctor_preview="branch") }}{% for error in form.hospital_branch.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group">{{ form.status.label }}{{ form.status(class="text-input", data_doctor_preview="status") }}{% for error in form.status.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group field-wide">{{ form.profile_photo.label }}{{ form.profile_photo(class="text-input photo-file-input", accept="image/jpeg,image/png,image/webp", data_doctor_photo_input="true") }}<span class="role-help">Choose a JPEG, PNG, or WebP image up to 2 MB. The selected image is previewed immediately.</span>{% for error in form.profile_photo.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group field-wide">{{ form.bio.label }}{{ form.bio(class="text-input", rows=4, placeholder="Brief clinical background, areas of care, or patient-facing introduction") }}{% for error in form.bio.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+        </div>
+      </section>
+
+      <section class="form-section doctor-edit-section">
+        <div class="doctor-edit-section-heading"><span class="doctor-edit-step">02</span><div><h2>Contact and consultation</h2><p class="muted">Use details patients and operational staff need to coordinate care.</p></div></div>
+        <div class="form-grid">
+          <div class="field-group">{{ form.phone.label }}{{ form.phone(class="text-input", inputmode="numeric", autocomplete="tel") }}{% for error in form.phone.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group">{{ form.email.label }}{{ form.email(class="text-input", autocomplete="email") }}{% for error in form.email.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group">{{ form.consultation_fee.label }}{{ form.consultation_fee(class="text-input", min=0, step="0.01", inputmode="decimal") }}{% for error in form.consultation_fee.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+        </div>
+      </section>
+
+      <section class="form-section doctor-edit-section">
+        <div class="doctor-edit-section-heading"><span class="doctor-edit-step">03</span><div><h2>Appointment availability</h2><p class="muted">Select working days, then set the appointment window for those days.</p></div></div>
+        <fieldset class="availability-fieldset"><legend>Working days</legend><div class="day-check-grid">{% for key, short, label in days %}<label class="day-check">{{ form['day_' ~ key] }}<span>{{ short }}</span><small>{{ label }}</small></label>{% endfor %}</div></fieldset>
+        <div class="form-grid time-grid">
+          <div class="field-group">{{ form.available_from.label }}{{ form.available_from(class="text-input") }}{% for error in form.available_from.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+          <div class="field-group">{{ form.available_to.label }}{{ form.available_to(class="text-input") }}{% for error in form.available_to.errors %}<span class="field-error">{{ error }}</span>{% endfor %}</div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="form-actions doctor-edit-actions"><a class="button button-quiet" href="{{ url_for('doctors.detail', doctor_id=doctor.id) if doctor else url_for('doctors.list_doctors') }}">Discard changes</a>{{ form.submit(class="button button-primary") }}</div>
+</form>
+{% endblock %}
