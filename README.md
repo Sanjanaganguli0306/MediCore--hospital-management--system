@@ -195,7 +195,7 @@ This project demonstrates practical experience with:
 
 ### 🧑‍🤝‍🧑 Patient Dashboard
 
-![Patient Dashboard](./screenshots/patient-dashboard.png)
+![Patient Dashboard](<img width="1898" height="903" alt="Image" src="https://github.com/user-attachments/assets/124c584f-344c-4236-a3f1-bf5cb14c71ea" />./screenshots/patient-dashboard.png)
 
 ### 📅 Appointment Management
 
