@@ -187,7 +187,7 @@ This project demonstrates practical experience with:
 
 ### 🏠 Landing Page
 
-![MediCore Home](./screenshots/home.png)
+![MediCore Home](<img width="1994" height="968" alt="Image" src="https://github.com/user-attachments/assets/4084f4e9-f21a-430e-82ab-dcf5b1808ed4" />)
 
 ### 👨‍⚕️ Doctor Dashboard
 
