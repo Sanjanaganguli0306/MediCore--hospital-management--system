@@ -187,11 +187,11 @@ This project demonstrates practical experience with:
 
 ### 🏠 Landing Page
 
-![MediCore Home](<img width="1994" height="968" alt="Image" src="https://github.com/user-attachments/assets/4084f4e9-f21a-430e-82ab-dcf5b1808ed4" />)
+![MediCore Home](<img width="1994" height="968" alt="Image" src="https://github.com/user-attachments/assets/4084f4e9-f21a-430e-82ab-dcf5b1808ed4" />./screenshots/landing-dashboard.png)
 
 ### 👨‍⚕️ Doctor Dashboard
 
-![Doctor Dashboard](<img width="2001" height="890" alt="Image" src="https://github.com/user-attachments/assets/610d287b-8ce9-4951-99b7-ebc556fec916" />)
+![Doctor Dashboard](<img width="2001" height="890" alt="Image" src="https://github.com/user-attachments/assets/610d287b-8ce9-4951-99b7-ebc556fec916" />./screenshots/doctor-dashboard.png)
 
 ### 🧑‍🤝‍🧑 Patient Dashboard
 
@@ -199,11 +199,11 @@ This project demonstrates practical experience with:
 
 ### 📅 Appointment Management
 
-![Appointments](./screenshots/appointments.png)
+![Appointments](<img width="1887" height="900" alt="Image" src="https://github.com/user-attachments/assets/2f4bd1d0-90ff-49d8-97e8-2e78bc53c5f5" />./screenshots/appointments.png)
 
 ### 👤 Doctor Profile
 
-![Doctor Profile](./screenshots/doctor-profile.png)
+![Doctor Profile](<img width="1890" height="895" alt="Image" src="https://github.com/user-attachments/assets/836a501a-9290-4a5d-a920-0ad07e2fc85b" />./screenshots/doctor-profile.png)
 
 ---
 
