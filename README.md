@@ -191,7 +191,7 @@ This project demonstrates practical experience with:
 
 ### 👨‍⚕️ Doctor Dashboard
 
-![Doctor Dashboard](./screenshots/doctor-dashboard.png)
+![Doctor Dashboard](<img width="2001" height="890" alt="Image" src="https://github.com/user-attachments/assets/610d287b-8ce9-4951-99b7-ebc556fec916" />)
 
 ### 🧑‍🤝‍🧑 Patient Dashboard
 
